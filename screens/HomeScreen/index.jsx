@@ -1,34 +1,18 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Button, Text, TouchableWithoutFeedback, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, TouchableWithoutFeedback, TouchableHighlight } from "react-native";
 import ButtonCustom from '../../components/ButtonCustom';
 import Eye from 'react-native-vector-icons/Ionicons';
 import Trash from 'react-native-vector-icons/Octicons';
 import Plus from 'react-native-vector-icons/Entypo';
 import Card from "../../components/Card";
 import { ScrollView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
 
 const HomeScreen = ({ navigation }) => {
   const [visible, setVisible] = useState(true);
-  // const cardList = [];
-  const cardList = [
-    {
-      cardName: 'bank 1',
-      cardUser: 'John Doe',
-      cardNumber: '1234 1234 1234 1234'
-    },
-    {
-      cardName: 'bank 2',
-      cardUser: 'Will Shake',
-      cardNumber: '4321 4321 4321 4321'
-    }
-  ];
-  // const cardList = [
-  //   {
-  //     cardName: 'bank 1',
-  //     cardUser: 'John Doe',
-  //     cardNumber: '1234 1234 1234 1234'
-  //   }
-  // ];
+
+  const card = useSelector(store => store.card);
+
   return (
     <View style={styles.container}>
       <View style={styles.infoUp}>
@@ -44,7 +28,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableHighlight>
       </View>
 
-      {cardList.length === 0 ?
+      {card.length === 0 ?
         <View>
           <Text>
             Você não tem cartões
@@ -52,7 +36,7 @@ const HomeScreen = ({ navigation }) => {
         </View> :
         <View style={styles.cardsContainer}>
           <ScrollView horizontal={true}>
-            {cardList.map((cardItem, index) => <Card key={index} cardItem={cardItem} visible={visible} />)}
+            {card.map((cardItem, index) => <Card key={index} cardItem={cardItem} visible={visible} />)}
           </ScrollView>
         </View>
       }

@@ -1,8 +1,12 @@
 import React, {useState, useEffect} from "react";
 import { Button, View, StyleSheet, Text, TextInput } from "react-native";
 import Card from "../../components/Card";
+import { useDispatch } from "react-redux";
+import { addCard } from "../../store/modules/cards/actions";
 
 const AddCardScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [inputCardName, setInputCardName] = useState('');
   const [inputCardUser, setInputCardUser] = useState('');
   const [inputCardNumber, setInputCardNumber] = useState('');
@@ -21,7 +25,8 @@ const AddCardScreen = ({ navigation }) => {
 
   useEffect(() => {
     cardShow();
-  }, [inputCardName, inputCardUser, inputCardNumber])
+  }, [inputCardName, inputCardUser, inputCardNumber]);
+
   return (
     <View style={styles.container}>
       <View>
@@ -73,7 +78,11 @@ const AddCardScreen = ({ navigation }) => {
       <View style={styles.buttonSubmit}>
         <Button
           title='ADICIONAR'
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => dispatch(addCard({
+            cardName: inputCardName,
+            cardUser: inputCardUser,
+            cardNumber: inputCardNumber
+          }))}
         />
       </View>
     </View>
